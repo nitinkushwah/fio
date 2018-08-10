@@ -2,7 +2,7 @@
 # iodepth is global parameter and will be shared with all devices.
 # Running on CPU 1 to 4 only.
 # Time 120 sec
-# w_await time will be little higher as all device share same queue(because of single job)
+# ( iostat -x 5 100) --> w_await time will be little higher as all device share same queue(because of single job)
 
 [global]
 bs=4k
