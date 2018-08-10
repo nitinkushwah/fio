@@ -1,0 +1,28 @@
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-storage_and_file_systems-configuration_tools
+>For Infiniflash:
+The QD needs to bee set to 32 and nr to 16 considering there are 4 active paths to the drive now and aggregate should be <=128.
+Each BSSD device total QD should be <=128
+# Reads are issued one by one and not affected by QD.
+# QD is for writes
+
+#Increasing a disk queue depth might improve disk performance by increasing disk throughput (or I/O) but might also increase latency (response delay). 
+
+#nr_requests: Maximum number of read and write requests that can be queued at one time before the next process requesting a read or write is put to sleep. 
+Default value of 128 means 128 read requests and 128 write requests can be queued at once. 
+Larger values may increase throughput for workloads writing many small files, smaller values increase throughput with larger I/O operations. 
+You could decrease this if you are using latency-sensitive applications, but then you shouldn't be using NOOP if latency is sensitive!
+#nr_requests is applied separately for reads and writes within the IO scheduler. So total read+write requests in IO scheduler = 2*nr_requests
+#nr_request only applies to the IO scheduler not to the IOs already dispatched to the disk.
+
+Max outstanding limit of IO operations to a device=(2*nr_requests) + queue_depth
+
+#Queue Depth(actual physical disk or Lun queue depth --> avgqu-sz)
+[root@localhost ~]# cat /sys/block/sdio/device/queue_depth
+32
+
+[root@localhost ~]# cat /sys/block/sdio/queue/nr_requests
+16
+[root@localhost ~]# cat /sys/block/sdio/queue/scheduler
+[noop] deadline cfq
+[root@localhost ~]# cat /sys/module/intel_idle/parameters/max_cstate
+9
