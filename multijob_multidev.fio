@@ -1,0 +1,34 @@
+# Independent fio jobs
+# w_await will be little higher as compared to independent jobs.
+
+[global]
+bs=4k
+iodepth=16
+direct=1
+ioengine=libaio
+randrepeat=0
+group_reporting
+time_based
+runtime=120
+filesize=10G
+cpus_allowed=1-4
+
+[job1]
+rw=randwrite
+filename=/dev/sdb
+name=random-write
+
+[job2]
+rw=randwrite
+filename=/dev/sdc
+name=random-write
+
+[job3]
+rw=randwrite
+filename=/dev/sdd
+name=random-write
+
+[job4]
+rw=randwrite
+filename=/dev/sde
+name=random-write
