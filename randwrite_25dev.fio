@@ -1,0 +1,21 @@
+#Test fio random write on 25 devices.
+# iodepth is global parameter and will be shared with all devices.
+# Running on CPU 1 to 4 only.
+# Time 120 sec
+
+[global]
+bs=4k
+iodepth=16
+direct=1
+ioengine=libaio
+randrepeat=0
+group_reporting
+time_based
+runtime=120
+filesize=10G
+cpus_allowed=1-4
+
+[job1]
+rw=randwrite
+filename=/dev/sdb:/dev/sdc:/dev/sdd:/dev/sde:/dev/sdf:/dev/sdg:/dev/sdh:/dev/sdi:/dev/sdj:/dev/sdk:/dev/sdl:/dev/sdm:/dev/sdn:/dev/sdo:/dev/sdp:/dev/sdr:/dev/sds:/dev/sdt:/dev/sdu:/dev/sdv:/dev/sdw:/dev/sdx:/dev/sdy:/dev/sdz:/dev/sdq
+name=random-write
