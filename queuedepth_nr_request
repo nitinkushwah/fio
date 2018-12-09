@@ -1,5 +1,5 @@
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-storage_and_file_systems-configuration_tools
->For Infiniflash:
+>For Infiniflash :
 The QD needs to bee set to 32 and nr to 16 considering there are 4 active paths to the drive now and aggregate should be <=128.
 Each BSSD device total QD should be <=128
 # Reads are issued one by one and not affected by QD.
